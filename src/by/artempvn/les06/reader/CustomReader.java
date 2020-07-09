@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import by.artempvn.les06.exception.CustomException;
+import by.artempvn.les06.model.exception.CustomException;
 
 public class CustomReader {
 

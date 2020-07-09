@@ -3,10 +3,11 @@ package by.artempvn.les06.creator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import by.artempvn.les06.entity.Book;
-import by.artempvn.les06.exception.CustomException;
 
-public class BookFactory {
+import by.artempvn.les06.model.entity.Book;
+import by.artempvn.les06.model.exception.CustomException;
+
+public class BookCreator {
 	private final static String FIELD_DELIMITER = "//";
 	private final static String AUTHOR_DELIMITER = "/";
 

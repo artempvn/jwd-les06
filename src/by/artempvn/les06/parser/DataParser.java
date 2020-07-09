@@ -1,6 +1,6 @@
 package by.artempvn.les06.parser;
 
-import by.artempvn.les06.exception.CustomException;
+import by.artempvn.les06.model.exception.CustomException;
 
 public class DataParser {
 //TODO remove later maybe

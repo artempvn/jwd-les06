@@ -1,4 +1,4 @@
-package by.artempvn.les06.exception;
+package by.artempvn.les06.model.exception;
 
 public class CustomException extends Exception {
 
