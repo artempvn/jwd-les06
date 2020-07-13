@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Book {
-	private long id=-1;
+	private long id = -1;
 	private String title;
 	private List<String> authors;
 	private int numberPages;
@@ -18,20 +18,19 @@ public class Book {
 		this.numberPages = numberPages;
 		this.yearPublishing = yearPublishing;
 	}
-	
+
 	public Book(long id, String title, List<String> authors, int numberPages,
 			int yearPublishing) {
-		this(title,  authors, numberPages,
-			yearPublishing);
+		this(title, authors, numberPages, yearPublishing);
 		this.id = id;
 	}
 
 	public long getId() {
 		return id;
 	}
-	
+
 	public void setId(long id) {
-		this.id=id;
+		this.id = id;
 	}
 
 	public String getTitle() {
@@ -49,45 +48,47 @@ public class Book {
 	public int getYearPublishing() {
 		return yearPublishing;
 	}
-	
-	public static class IdComparator implements Comparator<Book>{
+
+	public static class IdComparator implements Comparator<Book> {
 		@Override
 		public int compare(Book book1, Book book2) {
-			return ((int) (book1.id-book2.id));
+			return ((int) (book1.id - book2.id));
 		}
 	}
-	
-	public static class TitleComparator implements Comparator<Book>{
+
+	public static class TitleComparator implements Comparator<Book> {
 		@Override
 		public int compare(Book book1, Book book2) {
 			return (book1.title.compareToIgnoreCase(book2.title));
 		}
 	}
-	
-	public static class AuthorComparator implements Comparator<Book>{
+
+	public static class AuthorComparator implements Comparator<Book> {
 		@Override
 		public int compare(Book book1, Book book2) {
 			int result;
-			int i=0;
+			int i = 0;
 			do {
-				result=book1.authors.get(i).compareToIgnoreCase(book2.authors.get(i));
+				result = book1.authors.get(i)
+						.compareToIgnoreCase(book2.authors.get(i));
 				i++;
-			} while (result!=0&&i<book1.authors.size()&&i<book2.authors.size());
+			} while (result != 0 && i < book1.authors.size()
+					&& i < book2.authors.size());
 			return result;
 		}
 	}
-	
-	public static class NumberPagesComparator implements Comparator<Book>{
+
+	public static class NumberPagesComparator implements Comparator<Book> {
 		@Override
 		public int compare(Book book1, Book book2) {
-			return  (book1.numberPages-book2.numberPages);
+			return (book1.numberPages - book2.numberPages);
 		}
 	}
-	
-	public static class YearPublishingComparator implements Comparator<Book>{
+
+	public static class YearPublishingComparator implements Comparator<Book> {
 		@Override
 		public int compare(Book book1, Book book2) {
-			return (book1.yearPublishing-book2.yearPublishing);
+			return (book1.yearPublishing - book2.yearPublishing);
 		}
 	}
 

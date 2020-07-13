@@ -1,28 +1,35 @@
 package by.artempvn.les06.creator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
+import java.util.Map;
+import java.util.Optional;
+import by.artempvn.les06.controller.command.FieldType;
 import by.artempvn.les06.model.entity.Book;
-import by.artempvn.les06.model.exception.CustomException;
+import by.artempvn.les06.model.exception.ModelException;
+import by.artempvn.les06.validator.BookValidator;
 
 public class BookCreator {
-	private final static String FIELD_DELIMITER = "//";
-	private final static String AUTHOR_DELIMITER = "/";
 
-	public List<Book> createBooks(List<String> booksData)
-			throws CustomException {
-		List<Book> books = new ArrayList<>();
-		for (String bookData : booksData) {
-			String[] fields = bookData.split(FIELD_DELIMITER);
-			String title = fields[0];
-			String[] authors = fields[1].split(AUTHOR_DELIMITER);
-			int numberPages = Integer.parseInt(fields[2]);
-			int yearPublishing = Integer.parseInt(fields[3]);
-			books.add(new Book(title, Arrays.asList(authors), numberPages,
-					yearPublishing));
+	public Optional<Book> createBook(Map<String, Object> bookData)
+			throws ModelException {
+		BookValidator validator = new BookValidator();
+		Optional<Book> book = Optional.empty();
+		long id = (long) bookData.get(FieldType.ID.name());
+		String title = (String) bookData.get(FieldType.TITLE.name());
+		List<String> authors = (List<String>) bookData
+				.get(FieldType.AUTHORS.name());
+		int numberPages = (int) bookData.get(FieldType.NUMBER_PAGES.name());
+		int yearPublishing = (int) bookData
+				.get(FieldType.YEAR_PUBLISHING.name());
+		boolean correctInput = (validator.isIdCorrect(id)
+				&& validator.isTitleCorrect(title)
+				&& validator.isAuthorsCorrect(authors)
+				&& validator.isNumberPagesCorrect(numberPages)
+				&& validator.isYearPublishingCorrect(yearPublishing));
+		if (correctInput) {
+			book = Optional.of(
+					new Book(id, title, authors, numberPages, yearPublishing));
 		}
-		return books;
+		return book;
 	}
 }

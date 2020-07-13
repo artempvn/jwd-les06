@@ -1,4 +1,4 @@
-package by.artempvn.les06.model.validator;
+package by.artempvn.les06.validator;
 
 import java.time.Year;
 import java.util.List;
@@ -9,20 +9,26 @@ public class BookValidator {
 	private static final int MAX_NUMBER_PAGES = 5000;
 	private static final int MIN_NUMBER_PAGES = 30;
 	private static final int UNSET_ID = -1;
+	private static final String TITLE_REGEX = "[\\p{L}\\d]{1}.*";
+	private static final String AUTHOR_REGEX = "\\p{L}+(\\s\\p{L}+){0,3}";
 
 	public boolean isIdCorrect(long id) {
 		return (id >= UNSET_ID);
 	}
 
 	public boolean isTitleCorrect(String title) {
-		return (title.length() > 0);
+		return (title.matches(TITLE_REGEX));
+	}
+
+	public boolean isAuthorCorrect(String author) {
+		return (author.matches(AUTHOR_REGEX));
 	}
 
 	public boolean isAuthorsCorrect(List<String> authors) {
 		boolean isCorrect = true;
 		if (authors.size() > 0) {
 			for (String author : authors) {
-				if (author.isEmpty()) {
+				if (!author.matches(AUTHOR_REGEX)) {
 					isCorrect = false;
 				}
 			}
@@ -41,5 +47,4 @@ public class BookValidator {
 		int currentYear = Year.now().getValue();
 		return (yearPublishing >= MIN_YEAR && yearPublishing <= currentYear);
 	}
-
 }

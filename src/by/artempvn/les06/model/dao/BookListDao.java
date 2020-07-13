@@ -2,19 +2,19 @@ package by.artempvn.les06.model.dao;
 
 import java.util.List;
 import by.artempvn.les06.model.entity.Book;
-import by.artempvn.les06.model.exception.CustomException;
+import by.artempvn.les06.model.exception.ModelException;
 
 public interface BookListDao {
 
-	void addBook(Book book) throws CustomException;
+	void addBook(Book book) throws ModelException;
 
-	void removeBook(Book book) throws CustomException;
+	void removeBook(Book book) throws ModelException;
 
 	List<Book> findById(long id);
 	
 	List<Book> findByTitle(String title);
 	
-	List<Book> findByAuthor(List<String> authors);
+	List<Book> findByAuthor(String author);
 	
 	List<Book> findByNumberPages(int numberPages);
 	
@@ -31,5 +31,4 @@ public interface BookListDao {
 	List<Book> sortByYearPublishing();
 	
 	List<Book> takeAllBooks();
-
 }
