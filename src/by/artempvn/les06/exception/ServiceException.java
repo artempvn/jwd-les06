@@ -1,4 +1,4 @@
-package by.artempvn.les06.model.exception;
+package by.artempvn.les06.exception;
 
 public class ServiceException extends Exception {
 

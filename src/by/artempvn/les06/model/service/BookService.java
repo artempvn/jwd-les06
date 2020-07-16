@@ -1,111 +1,114 @@
 package by.artempvn.les06.model.service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import by.artempvn.les06.creator.BookCreator;
+import by.artempvn.les06.exception.DaoException;
+import by.artempvn.les06.exception.ServiceException;
 import by.artempvn.les06.model.dao.impl.BookListDaoImpl;
 import by.artempvn.les06.model.entity.Book;
-import by.artempvn.les06.model.exception.ModelException;
-import by.artempvn.les06.model.exception.ServiceException;
-import by.artempvn.les06.validator.BookValidator;
+import by.artempvn.les06.request.BookDataRequest;
 
 public class BookService {
 
-	public boolean addBook(Map<String, Object> bookData) throws ModelException {
-		BookCreator bookCreator=new BookCreator();
+	private static BookService bookService;
+
+	private BookService() {
+	}
+
+	public static BookService getInstance() {
+		if (bookService == null) {
+			bookService = new BookService();
+		}
+		return bookService;
+	}
+
+	public void add(BookDataRequest bookData) throws ServiceException {
+		BookCreator bookCreator = new BookCreator();
 		Optional<Book> book = bookCreator.createBook(bookData);
-		boolean isAdded = true;
 		if (book.isPresent()) {
 			try {
-				new BookListDaoImpl().addBook(book.get());
-			} catch (ModelException e) {
-				isAdded = false;
+				BookListDaoImpl.getInstance().add(book.get());
+			} catch (DaoException e) {
+				throw new ServiceException("Failed to add book");
 			}
 		} else {
-			throw new ModelException("Invalid data input");
+			throw new ServiceException("Invalid data input");
 		}
-		return isAdded;
 	}
 
-	public boolean removeBook(Map<String, Object> bookData) throws ModelException {
-		BookCreator bookCreator=new BookCreator();
+	public void remove(BookDataRequest bookData) throws ServiceException {
+		BookCreator bookCreator = new BookCreator();
 		Optional<Book> book = bookCreator.createBook(bookData);
-		boolean isRemoved = true;
 		if (book.isPresent()) {
 			try {
-				new BookListDaoImpl().removeBook(book.get());
-			} catch (ModelException e) {
-				isRemoved = false;
+				BookListDaoImpl.getInstance().remove(book.get());
+			} catch (DaoException e) {
+				throw new ServiceException("Failed to remove book");
 			}
 		} else {
-			throw new ModelException("Invalid data input");
+			throw new ServiceException("Invalid data input");
 		}
-		return isRemoved;
-	}
-	
-	public List<Book> findById(long id) throws ServiceException  {
-		BookValidator validator=new BookValidator();
-		if (!validator.isIdCorrect(id)) {
-			throw new ServiceException("Incorrect input data");
-		}
-		return (new BookListDaoImpl().findById(id));
 	}
 
-	public List<Book> findByTitle(String title) throws ServiceException  {
-		BookValidator validator=new BookValidator();
-		if (!validator.isTitleCorrect(title)) {
-			throw new ServiceException("Incorrect input data");
-		}
-		return (new BookListDaoImpl().findByTitle(title));
+	public List<Book> findById(long id) {
+		List<Book> searchedBook = BookListDaoImpl.getInstance().findById(id);
+		return searchedBook;
 	}
 
-	public List<Book> findByAuthor(String author) throws ServiceException {
-		BookValidator validator=new BookValidator();
-		if (!validator.isAuthorCorrect(author)) {
-			throw new ServiceException("Incorrect input data");
-		}
-		return (new BookListDaoImpl().findByAuthor(author));
+	public List<Book> findByTitle(String title) {
+		List<Book> searchedBooks = BookListDaoImpl.getInstance()
+				.findByTitle(title);
+		return searchedBooks;
 	}
 
-	public List<Book> findByNumberPages(int numberPages) throws ServiceException {
-		BookValidator validator=new BookValidator();
-		if (!validator.isNumberPagesCorrect(numberPages)) {
-			throw new ServiceException("Incorrect input data");
-		}
-		return (new BookListDaoImpl().findByNumberPages(numberPages));
+	public List<Book> findByAuthor(String author) {
+		List<Book> searchedBooks = BookListDaoImpl.getInstance()
+				.findByAuthor(author);
+		return searchedBooks;
 	}
-	
-	public List<Book> findByYearPublishing(int yearPublishing) throws ServiceException {
-		BookValidator validator=new BookValidator();
-		if (!validator.isYearPublishingCorrect(yearPublishing)) {
-			throw new ServiceException("Incorrect input data");
-		}
-		return (new BookListDaoImpl().findByYearPublishing(yearPublishing));
+
+	public List<Book> findByNumberPages(int numberPages) {
+		List<Book> searchedBooks = BookListDaoImpl.getInstance()
+				.findByNumberPages(numberPages);
+		return searchedBooks;
+	}
+
+	public List<Book> findByYearPublishing(int yearPublishing) {
+		List<Book> searchedBooks = BookListDaoImpl.getInstance()
+				.findByYearPublishing(yearPublishing);
+		return searchedBooks;
 	}
 
 	public List<Book> sortById() {
-		return (new BookListDaoImpl().sortById());
+		List<Book> sortedBooks = BookListDaoImpl.getInstance().sortById();
+		return sortedBooks;
 	}
 
 	public List<Book> sortByTitle() {
-		return (new BookListDaoImpl().sortByTitle());
+		List<Book> sortedBooks = BookListDaoImpl.getInstance().sortByTitle();
+		return sortedBooks;
 	}
 
-	public List<Book> sortByAuthor(){
-		return (new BookListDaoImpl().sortByAuthor());
+	public List<Book> sortByAuthor() {
+		List<Book> sortedBooks = BookListDaoImpl.getInstance().sortByAuthor();
+		return sortedBooks;
 	}
 
 	public List<Book> sortByNumberPages() {
-		return (new BookListDaoImpl().sortByNumberPages());
+		List<Book> sortedBooks = BookListDaoImpl.getInstance()
+				.sortByNumberPages();
+		return sortedBooks;
 	}
 
-	public List<Book> sortByYearPublishing(){
-		return (new BookListDaoImpl().sortByYearPublishing());
+	public List<Book> sortByYearPublishing() {
+		List<Book> sortedBooks = BookListDaoImpl.getInstance()
+				.sortByYearPublishing();
+		return sortedBooks;
 	}
-	
+
 	public List<Book> takeAllBooks() {
-		return (new BookListDaoImpl().takeAllBooks());
+		List<Book> books = BookListDaoImpl.getInstance().takeAllBooks();
+		return books;
 	}
-	
 }

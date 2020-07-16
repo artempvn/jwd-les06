@@ -74,6 +74,9 @@ public class Book {
 				i++;
 			} while (result != 0 && i < book1.authors.size()
 					&& i < book2.authors.size());
+			if (result == 0 && book1.authors.size() != book2.authors.size()) {
+				result = book1.authors.size() - book2.authors.size();
+			}
 			return result;
 		}
 	}
@@ -144,8 +147,11 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return String.format(
-				"Book [id=%s, title=%s, authors=%s, numberPages=%s, yearPublishing=%s]",
-				id, title, authors, numberPages, yearPublishing);
+		StringBuilder builder = new StringBuilder();
+		builder.append("Book [id=").append(id).append(", title=").append(title)
+				.append(", authors=").append(authors).append(", numberPages=")
+				.append(numberPages).append(", yearPublishing=")
+				.append(yearPublishing).append("]");
+		return builder.toString();
 	}
 }

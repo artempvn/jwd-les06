@@ -3,7 +3,7 @@ package by.artempvn.les06.model.entity;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import by.artempvn.les06.model.exception.ModelException;
+import by.artempvn.les06.exception.DaoException;
 import by.artempvn.les06.util.CustomId;
 
 public class Library {
@@ -26,30 +26,32 @@ public class Library {
 		return Collections.unmodifiableList(books);
 	}
 
-	public void addBook(Book book) throws ModelException {
-		if (book == null) {
-			throw new ModelException("Null input");
-		}
-		if (books.contains(book)) {
-			throw new ModelException("Book is already added");
-		} else {
-			if (!isIdUnique(book)) {
-				throw new ModelException("ID is already used");
+	public void add(Book book) throws DaoException {
+		if (book != null) {
+			if (books.contains(book)) {
+				throw new DaoException("Book is already added");
+			} else {
+				if (!isIdUnique(book)) {
+					throw new DaoException("ID is already used");
+				}
+				books.add(book);
+				giveId(book);
 			}
-			books.add(book);
-			giveId(book);
-		}
+		}	
 	}
 
-	public void removeBook(Book book) throws ModelException {
-		if (book == null) {
-			throw new ModelException("Null input");
+	public void remove(Book book) throws DaoException {
+		if (book != null) {
+			if (books.contains(book)) {
+				books.remove(book);
+			} else {
+				throw new DaoException("There is no such book");
+			}
 		}
-		if (books.contains(book)) {
-			books.remove(book);
-		} else {
-			throw new ModelException("There is no such book");
-		}
+	}
+	
+	public void removeAll() {
+		books = new ArrayList<>();
 	}
 
 	private void giveId(Book book) {

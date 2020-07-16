@@ -1,14 +1,15 @@
 package by.artempvn.les06.model.dao;
 
 import java.util.List;
+
+import by.artempvn.les06.exception.DaoException;
 import by.artempvn.les06.model.entity.Book;
-import by.artempvn.les06.model.exception.ModelException;
 
 public interface BookListDao {
 
-	void addBook(Book book) throws ModelException;
+	void add(Book book) throws DaoException;
 
-	void removeBook(Book book) throws ModelException;
+	void remove(Book book) throws DaoException;
 
 	List<Book> findById(long id);
 	

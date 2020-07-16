@@ -5,19 +5,20 @@ import java.util.List;
 import java.util.Map;
 import by.artempvn.les06.controller.command.Command;
 import by.artempvn.les06.controller.command.FieldType;
-import by.artempvn.les06.controller.exception.ControllerException;
+import by.artempvn.les06.exception.ControllerException;
 import by.artempvn.les06.model.entity.Book;
 import by.artempvn.les06.model.service.BookService;
 import by.artempvn.les06.validator.InputDataValidator;
 
 public class SortByTagCommand implements Command {
+	private static final String KEY_VALUE = "Updated list";
 	private static final String SORT_PARAM = "tag";
 	private BookService bookService;
 
 	@Override
-	public Map<String, Object> execute(Map<String, String> params)
+	public Map<String, List<Book>> execute(Map<String, String> params)
 			throws ControllerException {
-		bookService = new BookService();
+		bookService = BookService.getInstance();
 		InputDataValidator dataValidator = new InputDataValidator();
 		if (!dataValidator.isCorrectFieldData(params.get(SORT_PARAM))) {
 			throw new ControllerException("Invalid field data");
@@ -42,8 +43,8 @@ public class SortByTagCommand implements Command {
 			sortedList = bookService.sortByNumberPages();
 			break;
 		}
-		Map<String, Object> output = new HashMap<>();
-		output.put("sorted list", sortedList);
+		Map<String, List<Book>> output = new HashMap<>();
+		output.put(KEY_VALUE, sortedList);
 		return output;
 	}
 }

@@ -2,21 +2,33 @@ package by.artempvn.les06.model.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import by.artempvn.les06.exception.DaoException;
 import by.artempvn.les06.model.dao.BookListDao;
 import by.artempvn.les06.model.entity.Book;
 import by.artempvn.les06.model.entity.Library;
-import by.artempvn.les06.model.exception.ModelException;
 
 public class BookListDaoImpl implements BookListDao {
 
-	@Override
-	public void addBook(Book book) throws ModelException {
-		Library.getInstance().addBook(book);
+	private static BookListDaoImpl daoImpl;
+
+	private BookListDaoImpl() {
+	}
+
+	public static BookListDaoImpl getInstance() {
+		if (daoImpl == null) {
+			daoImpl = new BookListDaoImpl();
+		}
+		return daoImpl;
 	}
 
 	@Override
-	public void removeBook(Book book) throws ModelException {
-		Library.getInstance().removeBook(book);
+	public void add(Book book) throws DaoException {
+		Library.getInstance().add(book);
+	}
+
+	@Override
+	public void remove(Book book) throws DaoException {
+		Library.getInstance().remove(book);
 	}
 
 	@Override
@@ -75,7 +87,7 @@ public class BookListDaoImpl implements BookListDao {
 		List<Book> books = Library.getInstance().getBooksReadOnly();
 		List<Book> searchedBooks = new ArrayList<>();
 		for (Book book : books) {
-			if (book.getNumberPages() == yearPublishing) {
+			if (book.getYearPublishing() == yearPublishing) {
 				searchedBooks.add(book);
 			}
 		}

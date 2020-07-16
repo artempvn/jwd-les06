@@ -6,7 +6,7 @@ import java.util.List;
 public class BookValidator {
 
 	private static final int MIN_YEAR = 1920;
-	private static final int MAX_NUMBER_PAGES = 5000;
+	private static final int MAX_NUMBER_PAGES = 10_000;
 	private static final int MIN_NUMBER_PAGES = 30;
 	private static final int UNSET_ID = -1;
 	private static final String TITLE_REGEX = "[\\p{L}\\d]{1}.*";

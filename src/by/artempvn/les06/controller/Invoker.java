@@ -1,26 +1,34 @@
 package by.artempvn.les06.controller;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import by.artempvn.les06.controller.command.Command;
-import by.artempvn.les06.controller.exception.ControllerException;
+import by.artempvn.les06.exception.ControllerException;
+import by.artempvn.les06.model.entity.Book;
 import by.artempvn.les06.validator.InputDataValidator;
 
 public class Invoker {
-	private Command command;
 
-	public Invoker(Command command) {
-		this.command = command;
+	private static Invoker invoker;
+
+	private Invoker() {
 	}
 
-	public Map<String, Object> processRequest(Map<String, String> params)
-			throws ControllerException {
+	public static Invoker getInstance() {
+		if (invoker == null) {
+			invoker = new Invoker();
+		}
+		return invoker;
+	}
+
+	public Optional<Map<String, List<Book>>> processRequest(String command,
+			Map<String, String> params) throws ControllerException {
 		InputDataValidator dataValidator = new InputDataValidator();
-		Map<String, Object> output = new HashMap<>();
+		Optional<Map<String, List<Book>>> output = Optional.empty();
+		Command userCommand = InvokerProvider.defineCommand(command);
 		if (params != null && dataValidator.isNotNullMapValue(params)) {
-			output = command.execute(params);
-		} else {
-			throw new ControllerException("null data value");
+			output = Optional.of(userCommand.execute(params));
 		}
 		return output;
 	}

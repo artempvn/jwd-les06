@@ -1,4 +1,4 @@
-package by.artempvn.les06.controller.exception;
+package by.artempvn.les06.exception;
 
 public class ControllerException extends Exception {
 	public ControllerException() {

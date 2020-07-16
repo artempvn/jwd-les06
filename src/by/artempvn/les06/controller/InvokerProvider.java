@@ -2,7 +2,7 @@ package by.artempvn.les06.controller;
 
 import by.artempvn.les06.controller.command.Command;
 import by.artempvn.les06.controller.command.CommandType;
-import by.artempvn.les06.controller.exception.ControllerException;
+import by.artempvn.les06.exception.ControllerException;
 
 public class InvokerProvider {
 
